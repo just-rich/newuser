@@ -1,0 +1,11 @@
+{
+  "token": "discord_bot_token_here",
+  "roleId": "1348625351068094494",
+  "checkInterval": 3600000,
+  "_comment": "dailyMessageTime uses 24-hour clock. Leave lastMessageId alone, the bot updates this with the message ID after sending the dailyMessage, this is how it knows to delete the previous day's message.",
+  "channelId": "872294229240598548",
+  "dailyMessage": "Hey <@&1348625351068094494>! Just a friendly reminder, **BEWARE of scammers & impersonators** in your friend requests & DMs! Our team will **__never__** send you a friend request or DM you first. Please protect yourself! Learn about our scam prevention guidelines here https://discord.com/channels/872241427063668767/1181602885650370615/1181602941380075600",
+  "dailyMessageTime": "16:01",
+  "_comment2": "dailyMessageTime uses 24-hour clock, and in UTC time. Leave lastMessageId alone, the bot updates this with the message ID after sending the dailyMessage, this is how it knows to delete the previous day's message.",
+  "lastMessageId": null
+}

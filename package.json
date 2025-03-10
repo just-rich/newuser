@@ -1,0 +1,18 @@
+{
+  "name": "New User",
+  "version": "1.0.0",
+  "description": "A simple Discord bot sends a daily message to a specified channel at a specified time & removes a specified role from users after they've had it for 3 days or after 3 days of joining the server.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.0.0",
+    "node-cron": "^3.0.0"
+  },
+  "author": {
+    "name": "just-rich",
+    "url": "https://richw.xyz",
+    "email": "rich@richw.xyz"
+  }
+}
