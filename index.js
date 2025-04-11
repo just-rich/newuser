@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, ActionRowBuilder, Events } = require('discord.js');
 const cron = require('node-cron');
 const fs = require('fs');
 const config = require('./config.json');
@@ -62,9 +62,21 @@ async function sendDailyMessage() {
       }
     }
 
-    // Send the new daily message
+    // Create a button
+    const button = new ButtonBuilder()
+      .setCustomId('remove-role-button')
+      .setLabel("I already know, don't remind me again!")
+      .setStyle(ButtonStyle.Danger);
+
+    const row = new ActionRowBuilder().addComponents(button);
+
+    // Send the new daily message with the button
     try {
-      const newMessage = await channel.send(config.dailyMessage);
+      const newMessage = await channel.send({
+        content: config.dailyMessage,
+        components: [row]
+      });
+
       // Update config.json with the new message ID
       config.lastMessageId = newMessage.id;
       fs.writeFileSync('./config.json', JSON.stringify(config, null, 2));
@@ -73,5 +85,24 @@ async function sendDailyMessage() {
     }
   }
 }
+
+// Handle button interactions
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isButton()) return;
+  if (interaction.customId === 'remove-role-button') {
+    const role = interaction.guild.roles.cache.get(config.roleId);
+    if (role && interaction.member.roles.cache.has(config.roleId)) {
+      try {
+        await interaction.member.roles.remove(role);
+        await interaction.reply({ content: 'Role removed successfully!', ephemeral: true });
+      } catch (error) {
+        console.error('Failed to remove role:', error);
+        await interaction.reply({ content: 'Failed to remove role. Please try again later.', ephemeral: true });
+      }
+    } else {
+      await interaction.reply({ content: 'You do not have the role to remove.', ephemeral: true });
+    }
+  }
+});
 
 client.login(config.token);
